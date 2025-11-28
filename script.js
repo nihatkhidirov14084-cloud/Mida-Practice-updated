@@ -749,7 +749,7 @@ function showResults() {
     timeResult.textContent = `Bütün testi ${timeDiff.toFixed(2)} saniyədə tamamladınız.`;
     resultContent.appendChild(timeResult);
     
-    if (timeDiff >= 10 && timeDiff <= 40) {
+    if (timeDiff >= 10 && timeDiff <= 45) {
         const winnerText = document.createElement('h2');
         winnerText.className = 'winner-text';
         winnerText.textContent = 'Təbriklər siz evi qazandınız!';
@@ -764,7 +764,7 @@ function showResults() {
         resultContent.appendChild(houseImage);
         
         createConfetti();
-    } else if (timeDiff > 40 && timeDiff <= 50) {
+    } else if (timeDiff > 45 && timeDiff <= 50) {
         const loserText = document.createElement('h2');
         loserText.className = 'loser-text';
         loserText.textContent = 'Ev başqası tərəfindən tutulub!';
