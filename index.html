@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mida Click Practice</title>  
+</head>
+<body>
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <button class="theme-btn active" data-theme="light">Açıq</button>
+        <button class="theme-btn" data-theme="dark">Tünd</button>
+        <button class="theme-btn" data-theme="neon">Neon</button>
+        <button class="theme-btn" data-theme="retro">Retro</button>
+    </div>
+
+    <!-- Sound Toggle -->
+    <div class="sound-toggle">
+        <button id="soundBtn">🔊</button>
+    </div>
+
+    <div class="container">
+        <h1>Kod Doğrulama Sistemi</h1>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer" id="timer">00:00:00</div>
+        </div>
+        
+        <div class="message" id="message"></div>
+        
+        <div class="stage active" id="registerStage">
+            <h2>Yarışa Qeydiyyat</h2>
+            <div class="form-group">
+                <label for="userName">Ad və Soyadınız:</label>
+                <input type="text" class="form-input" id="userName" placeholder="Ad və soyadınızı daxil edin">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Doğum Tarixiniz (Gün/Ay/İl):</label>
+                <input type="text" class="form-input" id="birthDate" placeholder="GGAAİİİİ formatında (məs: 15071990)">
+            </div>
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="startCompetition()">Yarışa Başla</button>
+            </div>
+        </div>
+        
+        <div class="stage" id="stage1">
+            <p>Gördüyünüz kodu sağdaki düymeler vasitəsilə daxil edin</p>
+            <div class="code-display" id="code1"></div>
+            <div class="input-display" id="input1"></div>
+            <div class="numpad-container">
+                <div class="numpad" id="numpad1">
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-hover" onclick="clearInput()">Sil</button>
+                    <button class="btn-hover" onclick="checkStage1()">Təsdiq</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aşama 2: Dropdown Seçimi -->
+        <div class="stage" id="stage2">
+            <p>Gördüyünüz kodu seçin</p>
+            <div class="code-display" id="code2"></div>
+            <div class="dropdown-container" id="dropdownContainer"></div>
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="backToStage1()">Geri</button>
+                <button class="btn-hover" onclick="checkStage2()">Təsdiq</button>
+            </div>
+        </div>
+        
+        <!-- Aşama 3: Renk Sıralama -->
+        <div class="stage" id="stage3">
+            <p>Rəngləri aşağıdakı ardıcıllıqla sıralayın:</p>
+            <div class="code-display" id="colorSequence"></div>
+            <div class="color-buttons" id="colorButtons">
+                <!-- Renk butonları JavaScript ile karışık olarak eklenecek -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="backToStage2()">Geri</button>
+                <button class="btn-hover" onclick="checkStage3()">Təsdiq</button>
+            </div>
+        </div>
+        
+        <!-- Aşama 4: Scroll Testi -->
+        <div class="stage" id="stage4">
+            <p>Aşağıdakı siyahıda "SEÇ" düyməsini tapın və tez klikləyin</p>
+            <div class="scroll-container" id="scrollContainer">
+                <!-- Scroll öğeleri JavaScript ile eklenecek -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="backToStage3()">Geri</button>
+                <button class="btn-hover" onclick="checkStage4()">Təsdiq</button>
+            </div>
+        </div>
+        
+        <!-- Aşama 5: Doğum Tarixi Girişi -->
+        <div class="stage" id="stage5">
+            <p>Doğum tarixinizi aşağıdaki düymeler vasitəsilə daxil edin</p>
+            <p class="date-info">Format: GÜNAYİL (məsələn: 15071990) - / və ya . yazmayın</p>
+            <div class="input-display" id="birthDateInput"></div>
+            <div class="numpad-container">
+                <div class="numpad" id="numpad5">
+                    <!-- Numpad tuşları JavaScript ile karışık olarak eklenecek -->
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-hover" onclick="backToStage4()">Geri</button>
+                    <button class="btn-hover" onclick="clearBirthDateInput()">Sil</button>
+                    <button class="btn-hover" onclick="checkStage5()">Təsdiq</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aşama 6: Drag to Verify -->
+        <div class="stage" id="stage6">
+            <p>Doğrulama üçün sürüşdürün</p>
+            <div class="drag-verify-container">
+                <div class="drag-track">
+                    <div class="drag-slider" id="dragSlider">
+                        <div class="slider-handle">
+                            <span>→</span>
+                        </div>
+                        <div class="slider-text">Təsdiqləndi!</div>
+                    </div>
+                    <div class="drag-text">Doğrulama üçün sürüşdürün</div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="backToStage5()">Geri</button>
+                <button class="btn-hover" onclick="checkStage6()">Təsdiq</button>
+            </div>
+        </div>
+        
+        <!-- Aşama 7: İsim Girişi -->
+        <div class="stage" id="stage7">
+            <p>Soyadınızı və adınızı daxil edin</p>
+            <input type="text" class="form-input" id="nameInput" placeholder="Soyadınızı və adınızı yazın">
+            <div class="action-buttons">
+                <button class="btn-hover" onclick="backToStage6()">Geri</button>
+                <button class="btn-hover" onclick="checkStage7()">Təsdiq</button>
+            </div>
+        </div>
+        
+        <!-- Sonuç Ekranı -->
+       <!-- Sonuç Ekranı -->
+<div class="stage" id="resultStage">
+    <div class="result" id="resultContent">
+        <h2>Təbriklər!</h2>
+        <p>Bütün mərhələləri tamamladınız.</p>
+        <p id="timeResult"></p>
+    </div>
+    <button class="refresh-btn btn-hover" onclick="restartTest()">Yenidən Başla</button>
+</div>
+    </div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <script src="script.js"></script>
+</body>
+</html>

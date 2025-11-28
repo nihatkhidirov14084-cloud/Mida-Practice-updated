@@ -1,0 +1,689 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* TEMALAR */
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --container-bg: rgba(255, 255, 255, 0.95);
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+}
+
+[data-theme="dark"] {
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --container-bg: rgba(30, 30, 30, 0.95);
+    --success-color: #03dac6;
+    --error-color: #cf6679;
+}
+
+[data-theme="neon"] {
+    --primary-color: #ff00ff;
+    --secondary-color: #00ffff;
+    --background-color: #0a0a0a;
+    --text-color: #ffffff;
+    --container-bg: rgba(10, 10, 10, 0.9);
+    --success-color: #00ff00;
+    --error-color: #ff0000;
+}
+
+[data-theme="retro"] {
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --background-color: #ffe66d;
+    --text-color: #2d3047;
+    --container-bg: rgba(255, 255, 255, 0.9);
+    --success-color: #1a936f;
+    --error-color: #c44536;
+}
+
+body {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: all 0.5s ease;
+}
+
+.container {
+    background-color: var(--container-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease;
+}
+
+/* Tema dəyişdirici */
+.theme-selector {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.theme-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: var(--container-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.theme-btn.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* Səs düyməsi */
+.sound-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+#soundBtn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--container-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#soundBtn:hover {
+    transform: scale(1.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.stage {
+    display: none;
+    text-align: center;
+}
+
+.stage.active {
+    display: block;
+}
+
+.code-display {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 32px;
+    letter-spacing: 5px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.input-display {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 24px;
+    letter-spacing: 3px;
+    margin: 20px 0;
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.numpad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.numpad button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.numpad button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.numpad button:hover::after {
+    width: 100px;
+    height: 100px;
+}
+
+.numpad button:active {
+    transform: scale(0.95);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.action-buttons button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.action-buttons button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Hover animasiyaları */
+.btn-hover {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.btn-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-hover:hover::before {
+    left: 100%;
+}
+
+.btn-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.dropdown-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.dropdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-item span {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+select {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.result {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--secondary-color));
+    width: 0%;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.message {
+    text-align: center;
+    margin: 10px 0;
+    min-height: 24px;
+}
+
+.success {
+    color: var(--success-color);
+}
+
+.error {
+    color: var(--error-color);
+}
+
+.color-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.color-button {
+    height: 80px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.color-button:hover {
+    transform: scale(1.05);
+}
+
+.color-button:active {
+    transform: scale(0.95);
+}
+
+.scroll-container {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.scroll-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.scroll-item button {
+    background-color: var(--success-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+}
+
+.refresh-btn {
+    background-color: #ff9800;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.refresh-btn:hover {
+    background-color: #f57c00;
+}
+
+.date-info {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #ffeb3b;
+}
+
+/* Timer Styles */
+.timer-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.timer {
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* Drag to Verify Styles */
+.drag-verify-container {
+    margin: 30px 0;
+}
+
+.drag-track {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.drag-slider {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 60px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border-radius: 25px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.drag-slider:active {
+    cursor: grabbing;
+}
+
+.slider-handle {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.slider-text {
+    display: none;
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.drag-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* Result Animation Styles */
+.result-animation {
+    animation: celebrate 2s ease-in-out;
+}
+
+@keyframes celebrate {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.house-icon {
+    font-size: 60px;
+    margin: 20px 0;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+.winner-text {
+    color: var(--success-color);
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.loser-text {
+    color: var(--error-color);
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+}
+
+.practice-text {
+    color: #ff9800;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f44336;
+    animation: confetti-fall 5s linear forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Ev Şəkli Styles */
+.house-image {
+    width: 300px;
+    height: 200px;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--success-color);
+}
+
+.house-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Particle Canvas */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Neon tema xüsusi effektlər */
+[data-theme="neon"] .container {
+    box-shadow: 0 0 20px var(--primary-color),
+                0 0 40px var(--secondary-color);
+    border: 1px solid var(--primary-color);
+}
+
+[data-theme="neon"] .numpad button {
+    box-shadow: 0 0 10px currentColor;
+}
+
+[data-theme="neon"] .btn-hover {
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+/* Retro tema xüsusi effektlər */
+[data-theme="retro"] .container {
+    border: 3px solid var(--text-color);
+    box-shadow: 8px 8px 0 var(--text-color);
+}
+
+[data-theme="retro"] .numpad button {
+    border: 2px solid var(--text-color);
+    font-family: 'Courier New', monospace;
+}
+
+/* Video Container Styles */
+.video-container {
+    margin: 20px auto;
+    max-width: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.result-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 3px solid var(--error-color);
+}
